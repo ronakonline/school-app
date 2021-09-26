@@ -6,8 +6,8 @@ const Header = (props) => (
   <View {...props}>
     <Text category="h6">{props.title}</Text>
     <View style={styles.header} >
-      <Text category="s1">By {props.by} </Text>
-      <Text category='p1' appearance='hint'>{props.date}</Text> 
+      <Text category="s1" appearance='hint'>By {props.by} </Text>
+      <Text category='s2' appearance='hint'>{props.date}</Text> 
     </View>
   </View>
 );

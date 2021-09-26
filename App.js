@@ -10,7 +10,7 @@ import { TabNavigator } from './navigation/TabNavigator';
 export default () => (
   <>
   <IconRegistry icons={EvaIconsPack} />
-  <ApplicationProvider {...eva} theme={eva.light}>
+  <ApplicationProvider {...eva}  theme={eva.light}>
       <StatusBar backgroundColor="#61dafb" />
       <NavigationContainer>
           <TabNavigator />
