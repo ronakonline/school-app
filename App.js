@@ -5,6 +5,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { TabNavigator } from './navigation/TabNavigator';
+import {LoginScreen} from './screens/LoginScreen';
 
 
 export default () => (

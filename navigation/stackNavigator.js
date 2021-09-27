@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import {HomeScreen} from "../screens/HomeScreen";
 import {NoticeScreen} from "../screens/NoticeScreen";
+import { LoginScreen } from "../screens/LoginScreen";
+import { OtpScreen } from "../screens/OtpScreen";
 
 const Stack = createStackNavigator();
 
@@ -18,5 +20,14 @@ const MainStackNavigator = () => {
   );
 }
 
+const AuthenticationStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}} />
+      <Stack.Screen name="Otp" component={OtpScreen} options={{headerShown:false}}/>
+    </Stack.Navigator>
+  );
+}
 
-export { MainStackNavigator  };
+
+export { MainStackNavigator,AuthenticationStackNavigator  };
