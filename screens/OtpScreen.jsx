@@ -3,7 +3,8 @@ import { StyleSheet, Image, Alert } from "react-native";
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import OTPTextInput from "react-native-otp-textinput";
 
-export function OtpScreen() {
+export function OtpScreen(props) {
+ console.log(props.route.params.verificationId);
   return (
     <Layout level="2" style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.logo} />

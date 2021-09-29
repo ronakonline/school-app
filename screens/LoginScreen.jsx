@@ -1,52 +1,72 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { StyleSheet, Image, Alert } from "react-native";
 import { Button, Input, Layout, Text } from "@ui-kitten/components";
 
-
+import firebase from "../firebase";
 
 export function LoginScreen({ navigation }) {
   const [mobilenumber, setMobilenumber] = React.useState("");
+  const recaptchaVerifier = useRef(null);
+  const [verificationId, setVerificationId] = useState(null);
 
-  const checkLogin = (number) => {
-    if (number == "1") {
-      navigation.navigate("Otp");
-    } else {
-      Alert.alert("Wrong Number");
-    }
+  const sendVerification = async () => {
+      try {
+        const phoneProvider = new firebase.auth.PhoneAuthProvider();
+        const verificationIdcode = await phoneProvider.verifyPhoneNumber(
+          mobilenumber,
+          recaptchaVerifier.current
+        );
+        setVerificationId(verificationIdcode);
+        console.log(verificationId);
+        console.log(mobilenumber);
+        return true;
+      } catch (err) {
+        console.log(err);
+      }
   };
-  
-  return (
-    
-      <Layout level="2" style={styles.container}>
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
-        <Text style={styles.welcometext}>Welcome! </Text>
-        <Text style={styles.description} appearance="hint">
-          Use mobile number provided in school.
-        </Text>
-        <Layout level="2">
-          <Input
-            placeholder="Mobile Number"
-            size="large"
-            status="primary"
-            maxLength={10}
-            keyboardType="number-pad"
-            style={styles.input}
-            onChangeText={(value) => setMobilenumber(value)}
-          />
-          <Button
-            size="large"
-            style={styles.loginbtn}
-            onPress={() => checkLogin(mobilenumber)}
-          >
-            Login
-          </Button>
-        </Layout>
 
-        <Layout level="2" style={{ flex: 1 }}>
-          <Text style={styles.fromtext}>From NR WebWise</Text>
-        </Layout>
+
+  return (
+    <Layout level="2" style={styles.container}>
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
+      <Text style={styles.welcometext}>Welcome! </Text>
+      <Text style={styles.description} appearance="hint">
+        Use mobile number provided in school.
+      </Text>
+      <Layout level="2">
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={firebase.app().options}
+        />
+        <Input
+          placeholder="Mobile Number"
+          size="large"
+          status="primary"
+          keyboardType="phone-pad"
+          style={styles.input}
+          onChangeText={(value) => setMobilenumber(value)}
+        />
+        <Button
+          size="large"
+          style={styles.loginbtn}
+          onPress={() => {
+            sendVerification().then((data)=>{
+              console.log(data);
+              if(data==true){
+                navigation.navigate('Otp')};
+              console.log(err);
+            });
+          }}
+        >
+          Login
+        </Button>
       </Layout>
 
+      <Layout level="2" style={{ flex: 1 }}>
+        <Text style={styles.fromtext}>From NR WebWise</Text>
+      </Layout>
+    </Layout>
   );
 }
 
