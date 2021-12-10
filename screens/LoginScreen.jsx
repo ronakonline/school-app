@@ -18,9 +18,10 @@ export function LoginScreen({ navigation }) {
           recaptchaVerifier.current
         );
         setVerificationId(verificationIdcode);
-        console.log(verificationId);
-        console.log(mobilenumber);
-        return true;
+        if(verificationId!==null){
+          navigation.navigate("Otp",{verificationId:verificationId,mobilenumber:mobilenumber});
+        }
+       
       } catch (err) {
         console.log(err);
       }
@@ -51,12 +52,7 @@ export function LoginScreen({ navigation }) {
           size="large"
           style={styles.loginbtn}
           onPress={() => {
-            sendVerification().then((data)=>{
-              console.log(data);
-              if(data==true){
-                navigation.navigate('Otp')};
-              console.log(err);
-            });
+            sendVerification();
           }}
         >
           Login

@@ -1,10 +1,29 @@
 import React from "react";
-import { StyleSheet, Image, Alert } from "react-native";
-import { Button, Input, Layout, Text } from "@ui-kitten/components";
+import { StyleSheet, Image } from "react-native";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import OTPTextInput from "react-native-otp-textinput";
 
 export function OtpScreen(props) {
- console.log(props.route.params.verificationId);
+ console.log("otp" + props.route.params.verificationId);
+ console.log("number" + props.route.params.mobilenumber);
+ const [otp, setOtp] = React.useState(null);
+ const otpInput = React.useRef(null);
+
+ const confirmCode = () => {
+ 
+   console.log("otp" + otpInput.current.getValue());
+  // const credential = firebase.auth.PhoneAuthProvider.credential(
+  //   verificationId,
+  //   code
+  // );
+  // firebase
+  //   .auth()
+  //   .signInWithCredential(credential)
+  //   .then((result) => {
+  //     console.log(result);
+  //   });
+};
+
   return (
     <Layout level="2" style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.logo} />
@@ -12,10 +31,12 @@ export function OtpScreen(props) {
       <Text style={styles.description} appearance="hint">
         Enter OTP sended to your mobile number.
       </Text>
-      <OTPTextInput inputCount="6" tintColor="blue"></OTPTextInput>
+      <OTPTextInput inputCount={6} ref={e => (otpInput = e)}></OTPTextInput>
       <Layout level="2" style={styles.buttonContainer}>
         <Button style={styles.btn}>Resend</Button>
-        <Button style={styles.btn}>Submit</Button>
+        <Button style={styles.btn} onPress={() => {
+            confirmCode();
+          }}>Submit</Button>
       </Layout>
     </Layout>
   );
